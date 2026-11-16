@@ -2,8 +2,8 @@
 
 You have two APIs. They come from two different systems, so they behave differently.
 
-* **Billing API**, Stripe-style: `https://platform.up-rank.com.au/api/hiring-mock/v1`  
-* **Product API**: `https://platform.up-rank.com.au/api/hiring-mock`
+- **Billing API**, Stripe-style: `https://platform.up-rank.com.au/api/hiring-mock/v1`
+- **Product API**: `https://platform.up-rank.com.au/api/hiring-mock`
 
 Your API key works for both, but each API expects it in a different header.
 
@@ -178,11 +178,10 @@ Optional filters: `customer`, `subscription`, `status` (`paid`, `open`, `uncolle
 }
 ```
 
-*   
-  `status` is `onboarding`, `live` or `cancelled`.  
-* `trade` can be `null`.  
-* `ads.monthly_budget` is the client's monthly ad spend in whole AUD. It's paid to the ad platform, not to us. The add-on fee is the subscription item in billing.  
-* `stripe_customer_id` links a client to the billing API.
+- `status` is `onboarding`, `live` or `cancelled`.
+- `trade` can be `null`.
+- `ads.monthly_budget` is the client's monthly ad spend in whole AUD. It's paid to the ad platform, not to us. The add-on fee is the subscription item in billing.
+- `stripe_customer_id` links a client to the billing API.
 
 ### **`GET /clients/{id}/leads`**
 
@@ -225,4 +224,3 @@ curl -H "X-API-Key: YOUR_KEY" "https://platform.up-rank.com.au/api/hiring-mock/c
 ```
 
 The data is the same for every candidate and doesn't change during the challenge.
-

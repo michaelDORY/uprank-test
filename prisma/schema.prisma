@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SyncRun {
+  id            String    @id @default(cuid())
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  referenceDate DateTime
+  status        String
+  errorMessage  String?
+  customerCount Int       @default(0)
+  subscriptionCount Int   @default(0)
+  invoiceCount  Int       @default(0)
+  clientCount   Int       @default(0)
+  leadMonthCount Int      @default(0)
+  ticketCount   Int       @default(0)
+}
+
+model Customer {
+  id         String   @id
+  name       String
+  email      String
+  created    DateTime
+  currency   String
+  delinquent Boolean
+  metadata   Json
+
+  subscriptions Subscription[]
+  invoices      Invoice[]
+  client        Client?
+
+  @@index([email])
+}
+
+model Subscription {
+  id                   String    @id
+  customerId           String
+  status               String
+  created              DateTime
+  startDate            DateTime
+  canceledAt           DateTime?
+  endedAt              DateTime?
+  cancellationReason   String?
+  cancellationFeedback String?
+  cancellationComment  String?
+
+  customer Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  items    SubscriptionItem[]
+  invoices Invoice[]
+
+  @@index([customerId])
+  @@index([status])
+}
+
+model SubscriptionItem {
+  id             String   @id
+  subscriptionId String
+  created        DateTime
+  priceId        String
+  priceNickname  String?
+  productId      String
+  unitAmount     Int
+  currency       String
+  interval       String
+  intervalCount  Int
+  quantity       Int
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([subscriptionId])
+  @@index([productId])
+}
+
+model Invoice {
+  id                           String    @id
+  customerId                   String
+  subscriptionId               String?
+  status                       String
+  billingReason                String?
+  currency                     String
+  amountDue                    Int
+  amountPaid                   Int
+  postPaymentCreditNotesAmount Int
+  attemptCount                 Int
+  created                      DateTime
+  periodStart                  DateTime?
+  periodEnd                    DateTime?
+  paidAt                       DateTime?
+  finalizedAt                  DateTime?
+  markedUncollectibleAt        DateTime?
+  voidedAt                     DateTime?
+
+  customer     Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([customerId])
+  @@index([subscriptionId])
+  @@index([status])
+}
+
+model Client {
+  id               String    @id
+  businessName     String
+  trade            String?
+  region           String?
+  stripeCustomerId String?   @unique
+  status           String
+  signupAt         DateTime
+  assetsReceivedAt DateTime?
+  siteApprovedAt   DateTime?
+  liveAt           DateTime?
+  lastLoginAt      DateTime?
+  adsEnabled       Boolean   @default(false)
+  adsMonthlyBudget Int?
+  adsEnabledAt     DateTime?
+
+  customer Customer?      @relation(fields: [stripeCustomerId], references: [id], onDelete: SetNull)
+  leads    LeadMonth[]
+  tickets  SupportTicket[]
+
+  @@index([status])
+  @@index([trade])
+}
+
+model LeadMonth {
+  id       String @id @default(cuid())
+  clientId String
+  month    String
+  leads    Int
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@unique([clientId, month])
+  @@index([clientId])
+}
+
+model SupportTicket {
+  id        String   @id
+  clientId  String
+  createdAt DateTime
+  category  String
+  status    String
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([createdAt])
+}

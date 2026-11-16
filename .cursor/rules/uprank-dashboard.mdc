@@ -1,0 +1,43 @@
+---
+description: UpRank hiring dashboard conventions
+alwaysApply: true
+---
+
+# UpRank Dashboard Rules
+
+## Business clock
+
+- Never use `Date.now()` for metric windows.
+- Pass an explicit `referenceDate` into metrics (default/fallback 2026-11-01; prefer `X-Mock-Reference-Date` from sync).
+- Use dayjs UTC helpers in `@/lib/reference-date` for diffs/month keys.
+
+## Money & dates
+
+- Billing amounts are **cents** (AUD). Convert to dollars only at display boundaries.
+- Product `ads.monthly_budget` is whole AUD paid to the ad platform, not our revenue.
+- Billing dates are Unix seconds; product dates are ISO 8601.
+
+## Auth headers
+
+- Billing: `Authorization: Bearer ${MOCK_API_KEY}`
+- Product: `X-API-Key: ${MOCK_API_KEY}`
+
+## Data join
+
+- Join product `Client.stripeCustomerId` to billing `Customer.id`.
+
+## Architecture
+
+- Sync live mock APIs into Postgres; dashboard reads DB via SSR (`load-dashboard`), not a separate dashboard JSON API.
+- Metrics are pure functions under `src/lib/metrics/` — unit-test **formulas/thresholds** only (health, retention, ads, LTV, cancel counts). Do not add tests that only assert SEO/label string maps.
+- Keep the `shadcn` npm package: `src/app/globals.css` imports `shadcn/tailwind.css` (not just a CLI).
+- API routes validate with Zod; no `any`.
+- Imports stay at file top.
+- Exhaustive `switch` on unions with a `never` default.
+- Clone/setup instructions live in `README.md` — keep them accurate when sync UX or scripts change.
+- Style: Prettier (`.prettierrc.json`) + ESLint (`eslint-config-next` + `eslint-config-prettier`). Pre-commit via husky → lint-staged. Use `pnpm check` before push.
+
+## Ads add-on
+
+- Detect via subscription item `productId === "prod_ads_management"` (or price id `price_ads_management`).
+- Product `adsEnabled` is a secondary signal only.

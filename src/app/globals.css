@@ -1,26 +1,174 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-mona-sans);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-heading: var(--font-mona-condensed);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-crit-good: var(--crit-good);
+  --color-crit-good-fg: var(--crit-good-fg);
+  --color-crit-ok: var(--crit-ok);
+  --color-crit-ok-fg: var(--crit-ok-fg);
+  --color-crit-warn: var(--crit-warn);
+  --color-crit-warn-fg: var(--crit-warn-fg);
+  --color-crit-bad: var(--crit-bad);
+  --color-crit-bad-fg: var(--crit-bad-fg);
+  --color-crit-neutral: var(--crit-neutral);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+  Brand tokens from https://up-rank.com.au/assets/css/style.css
+  --color-primary: #2563EB
+  --color-primary-light: #3B82F6
+  --color-accent-orange: #F97316
+  --color-bg-deep / navy used lightly for dashboard chrome
+*/
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #eff6ff;
+  --secondary-foreground: #1d4ed8;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #fff7ed;
+  --accent-foreground: #c2410c;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #3b82f6;
+  --chart-1: #2563eb;
+  --chart-2: #3b82f6;
+  --chart-3: #1d4ed8;
+  --chart-4: #f97316;
+  --chart-5: #0f172a;
+  --radius: 0.75rem;
+  --sidebar: #eff6ff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #2563eb;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dbeafe;
+  --sidebar-accent-foreground: #1e3a8a;
+  --sidebar-border: #bfdbfe;
+  --sidebar-ring: #3b82f6;
+  --uprank-navy: #050b2c;
+  --uprank-navy-soft: #091540;
+
+  /* Criticality scale: green = good, red = bad */
+  --crit-good: #dcfce7;
+  --crit-good-fg: #166534;
+  --crit-ok: #ecfccb;
+  --crit-ok-fg: #3f6212;
+  --crit-warn: #fef3c7;
+  --crit-warn-fg: #b45309;
+  --crit-bad: #fee2e2;
+  --crit-bad-fg: #b91c1c;
+  --crit-neutral: #f1f5f9;
+
+  /* Assumptions / estimates (not raw facts) */
+  --assumption-from: #8b5cf6;
+  --assumption-to: #ec4899;
+  --assumption-fg: #ffffff;
+  --assumption-gradient: linear-gradient(
+    120deg,
+    var(--assumption-from),
+    var(--assumption-to)
+  );
+}
+
+@keyframes assumption-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+    box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
+  }
+  50% {
+    filter: brightness(1.08);
+    box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.18);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .bg-assumption {
+    background-image: var(--assumption-gradient);
+  }
+  .animate-assumption-pulse {
+    animation: assumption-pulse 2.8s ease-in-out infinite;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(
+        1200px 400px at 10% -10%,
+        rgba(37, 99, 235, 0.08),
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 320px at 100% 0%,
+        rgba(249, 115, 22, 0.06),
+        transparent 55%
+      );
+    background-attachment: fixed;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1,
+  h2,
+  .font-heading {
+    font-family: var(--font-mona-condensed), var(--font-mona-sans), sans-serif;
+    letter-spacing: -0.02em;
+  }
 }

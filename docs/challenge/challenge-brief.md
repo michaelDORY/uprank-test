@@ -14,21 +14,21 @@ You'll get data from two sources for a subscription business that serves trade b
 
 We've listed what the dashboard needs to show. How you define each metric, how you display it, and how you make the important things stand out is up to you. That's where we'll see how you think.
 
-## 
+##
 
 ## **Overview**
 
-* Time: **4 Hours** \- Take this amount of time, no less; if you’re capable of completing it more efficiently, use the extra time to improve and iterate. Then, note this in your breakdown.  
-* Pay: \$50usd \- You're paid for this whether or not we hire you.  
-* AI: Highly encouraged, but used for efficiency rather than decision making. You should be able to explain every decision without it.  
-* Stack: Next.js and TypeScript, with a backend and a database (Postgres or similar). A plain UI is fine; clarity matters more than polish. UI components are encouraged if you are familiar with a template stack.
+- Time: **4 Hours** \- Take this amount of time, no less; if you’re capable of completing it more efficiently, use the extra time to improve and iterate. Then, note this in your breakdown.
+- Pay: \$50usd \- You're paid for this whether or not we hire you.
+- AI: Highly encouraged, but used for efficiency rather than decision making. You should be able to explain every decision without it.
+- Stack: Next.js and TypeScript, with a backend and a database (Postgres or similar). A plain UI is fine; clarity matters more than polish. UI components are encouraged if you are familiar with a template stack.
 
 ### **The data**
 
 We'll provide an API with two parts:
 
-* Billing (Stripe-style): customers, subscriptions, invoices, cancellations, failed payments, and add-on subscriptions.  
-* Product data: each client's trade, onboarding status and dates, go-live date, monthly leads, support tickets, last login, and whether they use the ads add-on.
+- Billing (Stripe-style): customers, subscriptions, invoices, cancellations, failed payments, and add-on subscriptions.
+- Product data: each client's trade, onboarding status and dates, go-live date, monthly leads, support tickets, last login, and whether they use the ads add-on.
 
 The data is messy and incomplete in places, and some groups are very small. Handling that well is part of the task.
 
@@ -50,8 +50,8 @@ Leads per client per month, by trade. This is the main proof that the product wo
 
 ### **4\. Which trades are the best business?**
 
-* Revenue per client by trade  
-* Lifetime value by trade (average monthly revenue × average months retained)
+- Revenue per client by trade
+- Lifetime value by trade (average monthly revenue × average months retained)
 
 A trade that pays less but stays three times longer may be the better business. Make that easy to see.
 
@@ -71,12 +71,11 @@ Only start the bonus once the required views work. A strong bonus doesn't make u
 
 By the end of the 4 hours, send us a repo link that covers everything below.
 
-*  Connected to the API: billing and product data are joined, using live data rather than hardcoded values.  
-*  A working backend: joining and calculations happen on the server, so the frontend gets data ready to display.  
-*  A clear dashboard: one page with a clear visual hierarchy, so the things that need action are seen first. No auth or extra pages needed.  
-*  All five required views: at-risk list, retention and timing, leads by trade, revenue and lifetime value by trade, and ads add-on impact.  
-*  Well-defined metrics: you've decided exactly how each one is calculated (for example, what counts as "falling leads" or how to handle clients with no trade set).  
-* Bonus feature implemented.  
-*  Setup instructions: how to run it against the API.  
-*  A write-up covering your thought process behind implementation & how you believe the outcome is the most optimised approach. Also include an explanation as to your implementation of the bonus feature.
-
+- Connected to the API: billing and product data are joined, using live data rather than hardcoded values.
+- A working backend: joining and calculations happen on the server, so the frontend gets data ready to display.
+- A clear dashboard: one page with a clear visual hierarchy, so the things that need action are seen first. No auth or extra pages needed.
+- All five required views: at-risk list, retention and timing, leads by trade, revenue and lifetime value by trade, and ads add-on impact.
+- Well-defined metrics: you've decided exactly how each one is calculated (for example, what counts as "falling leads" or how to handle clients with no trade set).
+- Bonus feature implemented.
+- Setup instructions: how to run it against the API.
+- A write-up covering your thought process behind implementation & how you believe the outcome is the most optimised approach. Also include an explanation as to your implementation of the bonus feature.
